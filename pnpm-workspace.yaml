@@ -1,0 +1,10 @@
+# pnpm 10.8.0: permit only the native/build hooks used by the frozen lockfile.
+# New unreviewed lifecycle scripts stop installation instead of being approved.
+strictDepBuilds: true
+onlyBuiltDependencies:
+  - '@ffmpeg-installer/linux-x64'
+  - '@ffmpeg-installer/darwin-arm64'
+  - esbuild
+  - onnxruntime-node
+  - protobufjs
+  - sharp
