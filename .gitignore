@@ -2,3 +2,27 @@ node_modules
 dist
 .DS_Store
 .env
+.env.*
+!.env.example
+
+# OAuth credentials stay outside the repository, even for private tests.
+client_secret*.json
+client-secret*.json
+credentials*.json
+*token*.json
+oauth*.json
+.secrets/
+secrets/
+.runlore-private/
+
+# Local runtimes, models, generated previews, and upload receipts.
+.venv/
+venv/
+__pycache__/
+*.pyc
+.cache/
+/runlore/output/
+/runlore/renders/
+/outputs/
+private-upload-receipt.json
+*.receipt.json
