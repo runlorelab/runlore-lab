@@ -81,7 +81,7 @@ repository's default branch:
 5. Click the green **Run workflow** button once.
 6. Open the new run and wait for the steps to finish. The first render downloads
    the free voice model and browser, so it can take several minutes.
-7. Open its summary and follow **Private video** while signed in as RunLore.
+7. Open its summary and follow the video link while signed in as RunLore.
 
 Watch the entire Short. Check the sound, readable captions, footage/diagram mix,
 correct explanation, source links, and credits. In YouTube Studio, confirm its
@@ -142,7 +142,10 @@ These actions do not delete existing YouTube videos.
 ## Implementation notes
 
 The manual workflow has a read-only GitHub token, one upload at a time, a
-45-minute timeout, frozen package installation, and no credential caches. Its
+45-minute timeout, frozen package installation, and no credential caches.
+The pnpm 10.8.0 build allowlist permits only the known native/binary hooks;
+[unreviewed install scripts stop the installation](https://pnpm.io/10.x/settings#strictdepbuilds).
+Its
 official GitHub action revisions were checked against their release pages:
 
 - [checkout v7.0.1](https://github.com/actions/checkout/releases/tag/v7.0.1):
