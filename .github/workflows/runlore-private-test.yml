@@ -1,0 +1,171 @@
+name: RunLore private test
+run-name: RunLore private test by @${{ github.actor }}
+
+# Manual only. Public publishing needs a separate, explicitly approved workflow.
+on:
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: Approved episode filename without .json
+        required: true
+        type: string
+        default: 001-cadence
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runlore-upload
+  cancel-in-progress: false
+
+jobs:
+  private-test:
+    # Do not expose the upload secret to a run from an experimental branch.
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    env:
+      EPISODE_SLUG: ${{ inputs.episode }}
+      EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_CHANNEL_ID }}
+      RUNLORE_OUTPUT_DIR: ${{ runner.temp }}/runlore/output
+      RUNLORE_CACHE_DIR: ${{ runner.temp }}/runlore/cache
+      HF_HOME: ${{ runner.temp }}/runlore/cache/huggingface
+      XDG_CACHE_HOME: ${{ runner.temp }}/runlore/cache/xdg
+      UPLOAD_RECEIPT: ${{ runner.temp }}/runlore/private-upload-receipt.json
+    steps:
+      - name: Check out the reviewed code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Validate the requested episode and channel
+        run: |
+          python3 - <<'PY'
+          import os
+          import pathlib
+          import re
+          import sys
+
+          slug = os.environ['EPISODE_SLUG']
+          if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', slug) or len(slug) > 80:
+              sys.exit('Use an episode filename containing only lowercase letters, numbers, and hyphens.')
+          if not pathlib.Path('runlore/episodes', slug + '.json').is_file():
+              sys.exit('That approved episode file does not exist.')
+          if not re.fullmatch(r'UC[A-Za-z0-9_-]{22}', os.environ['EXPECTED_CHANNEL_ID']):
+              sys.exit('Set the YOUTUBE_CHANNEL_ID repository variable to the confirmed RunLore channel ID.')
+          pathlib.Path(os.environ['RUNLORE_OUTPUT_DIR']).mkdir(parents=True, exist_ok=True)
+          PY
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+
+      - name: Install video system libraries
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install --no-install-recommends -y \
+            ffmpeg fonts-dejavu-core libnss3 libdbus-1-3 libatk1.0-0 \
+            libasound2t64 libxrandr2 libxkbcommon-dev libxfixes3 \
+            libxcomposite1 libxdamage1 libgbm-dev libcups2 libcairo2 \
+            libpango-1.0-0 libatk-bridge2.0-0
+
+      - name: Install locked application dependencies
+        run: |
+          npm install --global pnpm@10.8.0
+          pnpm install --frozen-lockfile
+          python -m pip install --disable-pip-version-check --no-cache-dir -r runlore/requirements.txt
+
+      - name: Render the approved Short
+        run: |
+          node -r ts-node/register src/runlore/render.ts \
+            --episode "runlore/episodes/${EPISODE_SLUG}.json" \
+            --out "$RUNLORE_OUTPUT_DIR"
+
+      - name: Record a non-sensitive render summary
+        run: |
+          python - <<'PY'
+          import json
+          import math
+          import os
+          import pathlib
+
+          output = pathlib.Path(os.environ['RUNLORE_OUTPUT_DIR'])
+          report = json.loads((output / 'render-report.json').read_text())
+          for filename in ('metadata.json', 'source-report.json'):
+              if not (output / filename).is_file():
+                  raise SystemExit('A required review report is missing.')
+          videos = list(output.glob('*.mp4'))
+          if len(videos) != 1 or videos[0].stat().st_size == 0:
+              raise SystemExit('Expected exactly one non-empty rendered video.')
+          duration = report.get('duration_seconds')
+          if not isinstance(duration, (int, float)) or not math.isfinite(duration) or not 0 < duration <= 180:
+              raise SystemExit('The rendered duration is invalid.')
+          if (report.get('width'), report.get('height'), report.get('fps')) != (1080, 1920, 30):
+              raise SystemExit('The renderer did not report the expected vertical video format.')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('### RunLore private test\n\n')
+              summary.write(f"Episode: `{os.environ['EPISODE_SLUG']}`\n\n")
+              summary.write(f'Video rendered: 1080 × 1920, 30 fps, {duration:.1f} seconds.\n\n')
+              summary.write('Scientific source and footage reports generated. Preview files stay on this temporary runner.\n\n')
+          PY
+
+      - name: Upload privately and verify the result
+        # Credentials are available only here, after dependency setup and rendering.
+        env:
+          YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+        run: |
+          if [[ -z "$YOUTUBE_TOKEN_JSON" ]]; then
+            echo 'Add the YOUTUBE_TOKEN_JSON Actions secret before running this private test.' >&2
+            exit 1
+          fi
+          videos=("$RUNLORE_OUTPUT_DIR"/*.mp4)
+          if [[ ${#videos[@]} -ne 1 || ! -f "${videos[0]}" ]]; then
+            echo 'Expected exactly one rendered video.' >&2
+            exit 1
+          fi
+          python runlore/upload_private.py \
+            --video "${videos[0]}" \
+            --metadata "$RUNLORE_OUTPUT_DIR/metadata.json" \
+            --expected-channel-id "$EXPECTED_CHANNEL_ID" \
+            --receipt "$UPLOAD_RECEIPT"
+
+      - name: Show the upload status and video link
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import pathlib
+          import re
+
+          receipt_path = pathlib.Path(os.environ['UPLOAD_RECEIPT'])
+          if not receipt_path.is_file():
+              with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+                  summary.write('No completed upload receipt. If the upload step started, check YouTube Studio before retrying.\n')
+              raise SystemExit(0)
+          receipt = json.loads(receipt_path.read_text())
+          video_id = receipt.get('video_id', '')
+          if not re.fullmatch(r'[A-Za-z0-9_-]{11}', video_id):
+              raise SystemExit('The upload receipt has no valid video ID. Check YouTube Studio before retrying.')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(f'Video uploaded: https://www.youtube.com/watch?v={video_id}\n\n')
+              if receipt.get('privacy_status') != 'private' or receipt.get('channel_id') != os.environ['EXPECTED_CHANNEL_ID']:
+                  summary.write('Verification did not finish. Check this existing video in YouTube Studio before retrying.\n')
+                  raise SystemExit('The saved receipt does not confirm private visibility and the expected channel.')
+              summary.write('Verified private on the expected channel. Sign in as RunLore to watch it.\n\n')
+              summary.write('Public daily publishing remains disabled.\n')
+          PY
+
+      - name: Remove temporary preview and receipt files
+        if: always()
+        run: rm -rf -- "$RUNNER_TEMP/runlore"
