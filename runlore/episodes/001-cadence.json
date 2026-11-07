@@ -1,0 +1,148 @@
+{
+  "id": "001-cadence",
+  "title": "What happens when you take quicker running steps? | RunLore #Shorts",
+  "status": "evidence_reviewed_for_private_test",
+  "reviewed_at": "2026-11-07",
+  "review": {
+    "reviewer": "Codex research review",
+    "method": "Matched DOI metadata against PubMed and PMC; checked claims against the original study's methods, results and limitations.",
+    "user_approved": false,
+    "public_publication_approved": false
+  },
+  "language": "en",
+  "references": [
+    {
+      "doi": "10.1249/MSS.0b013e3181ebedf4",
+      "url": "https://doi.org/10.1249/MSS.0b013e3181ebedf4",
+      "full_text_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3022995/",
+      "metadata_url": "https://pubmed.ncbi.nlm.nih.gov/20581720/",
+      "title": "Effects of Step Rate Manipulation on Joint Mechanics during Running",
+      "authors": "Heiderscheit BC, Chumanov ES, Michalski MP, Wille CM, Ryan MB",
+      "year": 2011,
+      "published": "2011-02",
+      "verified_on": "2026-11-07",
+      "evidence_note": "Immediate within-subject treadmill biomechanics in 45 healthy recreational runners, with speed held constant; knee energy absorption decreased at preferred cadence +5% and +10%.",
+      "doi_verification": "DOI matches PubMed and PMC; doi.org returned a redirect to the article's Ovid publisher record on 2026-11-07."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "text": "At unchanged speed, a higher step rate means shorter steps.",
+      "source": 0,
+      "location": "Methods: Experimental protocol; Results: Table 1",
+      "support": "Speed was fixed within each runner; step length was shorter at the increased step rates."
+    },
+    {
+      "id": "C2",
+      "text": "At +5% of preferred cadence, knee mechanical energy absorption during loading response decreased.",
+      "source": 0,
+      "location": "Results: Table 2 and Figure 3",
+      "support": "Significant within-subject reduction in this per-stride biomechanical measure at +5%; script does not equate it with impact force, pain relief or injury prevention."
+    },
+    {
+      "id": "C3",
+      "text": "This study does not establish fewer injuries, long-term benefit, or one ideal cadence for everyone.",
+      "source": 0,
+      "location": "Methods; Discussion: limitations and cumulative loading",
+      "support": "Short-term laboratory design used individual preferred cadences; injury outcomes and long-term persistence were not measured."
+    }
+  ],
+  "limitations": [
+    "Healthy recreational runners; findings cannot be assumed to apply to painful or injured runners.",
+    "Immediate treadmill measures at the same speed, not a long-term training trial.",
+    "Energy absorption is a biomechanical measure; it is not injury incidence or a direct impact-force measurement.",
+    "More steps also means more loading cycles over a distance; cumulative injury risk was not established.",
+    "No universal cadence target or treatment instruction is given."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "footage",
+      "narration": "Could taking slightly quicker steps change your running mechanics?",
+      "heading": "QUICKER STEPS?",
+      "bullets": [
+        "A small change. A measurable effect.",
+        "Illustrative running footage"
+      ],
+      "asset": "../assets/arakawa-jogging-5s.mp4",
+      "sourceIds": [
+        0
+      ]
+    },
+    {
+      "id": "definition",
+      "kind": "graphic",
+      "graphic": "cadence",
+      "narration": "Cadence means steps per minute. At the same speed, more steps means shorter steps.",
+      "heading": "SAME SPEED",
+      "bullets": [
+        "More steps per minute",
+        "Shorter steps"
+      ],
+      "sourceIds": [
+        0
+      ]
+    },
+    {
+      "id": "study",
+      "kind": "footage",
+      "narration": "In a treadmill study of forty-five healthy recreational runners, researchers tested each runner's usual cadence and small changes around it.",
+      "heading": "45 RUNNERS",
+      "bullets": [
+        "Healthy recreational runners",
+        "Treadmill speed held constant",
+        "Illustrative running footage"
+      ],
+      "asset": "../assets/arakawa-jogging-5s.mp4",
+      "sourceIds": [
+        0
+      ]
+    },
+    {
+      "id": "finding",
+      "kind": "graphic",
+      "graphic": "cadence",
+      "narration": "At five percent above their usual cadence, runners absorbed less mechanical energy at the knee during each landing.",
+      "heading": "+5% CADENCE",
+      "bullets": [
+        "Less knee energy absorption",
+        "Measured during landing",
+        "Compared with their usual cadence"
+      ],
+      "sourceIds": [
+        0
+      ]
+    },
+    {
+      "id": "limits",
+      "kind": "graphic",
+      "graphic": "cadence",
+      "narration": "That is a lab measurement, not proof of fewer injuries. The study did not identify one ideal cadence for everyone.",
+      "heading": "KEEP THE CONTEXT",
+      "bullets": [
+        "No injury-prevention result",
+        "No universal 180 target",
+        "Long-term benefits not established"
+      ],
+      "sourceIds": [
+        0
+      ]
+    },
+    {
+      "id": "sources",
+      "kind": "sources",
+      "narration": "RunLore: simple running science. The verified paper is linked in the description.",
+      "heading": "RUNLORE",
+      "bullets": [
+        "Heiderscheit et al. (2011)",
+        "DOI verified",
+        "Science in the description"
+      ],
+      "sourceIds": [
+        0
+      ]
+    }
+  ],
+  "description": "Does a small cadence change alter running mechanics? This Short explains one immediate laboratory finding, with its limits. It does not establish injury prevention or prescribe a universal cadence.\n\nResearch: Heiderscheit BC, Chumanov ES, Michalski MP, Wille CM, Ryan MB. Effects of Step Rate Manipulation on Joint Mechanics during Running. Medicine & Science in Sports & Exercise. 2011;43(2):296–302.\nVerified DOI: https://doi.org/10.1249/MSS.0b013e3181ebedf4\nOpen author manuscript: https://pmc.ncbi.nlm.nih.gov/articles/PMC3022995/\n\nFootage: 'Jogging - near arakawa river - tokyo japan - 2022 may 3.webm' by Nesnad, Wikimedia Commons, CC BY 4.0. Source: https://commons.wikimedia.org/wiki/File:Jogging_-_near_arakawa_river_-_tokyo_japan_-_2022_may_3.webm\nLicense: https://creativecommons.org/licenses/by/4.0/\nChanges: first five seconds excerpted, transcoded, resized into the portrait layout and looped at original speed; original audio muted; text/graphics and narration added. The footage is illustrative; people shown are not study participants and do not endorse RunLore.\n\nNarration generated using free local text-to-speech. Graphics are original RunLore explanations, not copied study figures.\n\n#RunningScience #Cadence #RunLore #Shorts"
+}
