@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "id": "arakawa-jogging",
+      "path": "arakawa-jogging.webm",
+      "title": "Jogging - near arakawa river - tokyo japan - 2022 may 3.webm",
+      "creator": "Nesnad",
+      "creator_url": "https://commons.wikimedia.org/wiki/User:Nesnad",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Jogging_-_near_arakawa_river_-_tokyo_japan_-_2022_may_3.webm",
+      "source_revision_url": "https://commons.wikimedia.org/w/index.php?title=File:Jogging_-_near_arakawa_river_-_tokyo_japan_-_2022_may_3.webm&oldid=1189231856",
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Jogging_-_near_arakawa_river_-_tokyo_japan_-_2022_may_3.webm",
+      "created": "2022-05-03",
+      "downloaded_on": "2026-11-07",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_verified_on": "2026-11-07",
+      "license_basis": "Commons file description identifies uploader Nesnad's own work; offers CC BY 4.0 as selectable license. CC BY 4.0 selected; GFDL alternative not used.",
+      "sha256": "b35ed9e09daf639306305fd2cbdc8ff466c02cbd1795aca44013e7263c18df2d",
+      "width": 1920,
+      "height": 1080,
+      "duration_approx_seconds": 11.511,
+      "attribution": "Jogging - near arakawa river - tokyo japan - 2022 may 3.webm — Nesnad / Wikimedia Commons / CC BY 4.0. Excerpted, resized, original audio muted; narration, text and graphics added.",
+      "use_note": "Illustrative outdoor running footage; no endorsement or claim that depicted people are study participants. Keep source and license links with published description.",
+      "visual_inspection": "checked_2026-11-07",
+      "visual_inspection_note": "Viewed source frame at 3 seconds and four-frame contact sheet at 0/3/6/9 seconds. Real jogger on outdoor path. Use full landscape image contained in portrait panel; center-cover portrait crop loses moving subject. Use first 5 seconds for looped footage to keep the main runner visible. No study participation or technique demonstration implied."
+    },
+    {
+      "id": "arakawa-jogging-5s",
+      "path": "arakawa-jogging-5s.mp4",
+      "derived_from": "arakawa-jogging",
+      "title": "Jogging near Arakawa river — 5 second excerpt",
+      "creator": "Nesnad; excerpt by RunLore",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Jogging_-_near_arakawa_river_-_tokyo_japan_-_2022_may_3.webm",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_verified_on": "2026-11-07",
+      "sha256": "af5ff062f83625db71a1e6f07820c4444a16abd0c7ab0abfb1b6a526dc07b5e7",
+      "width": 1920,
+      "height": 1080,
+      "duration_approx_seconds": 5,
+      "changes": "First 5 seconds only; original speed preserved; muted; transcoded VP8 WebM to H.264 MP4. No crop.",
+      "attribution": "Jogging - near arakawa river - tokyo japan - 2022 may 3.webm — Nesnad / Wikimedia Commons / CC BY 4.0. Excerpted to 5 seconds, transcoded and muted. Narration, text and graphics added in final video.",
+      "visual_inspection": "checked_2026-11-07",
+      "use_note": "Contain full landscape shot inside portrait frame; do not center-crop. Loop at original speed if a scene lasts over 5 seconds. Retain full source/license attribution in description."
+    }
+  ]
+}
